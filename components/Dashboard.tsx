@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { Transaction, TransactionType, Category, UserLevel } from "../types";
 
@@ -27,56 +27,35 @@ const Dashboard: React.FC<DashboardProps> = ({
   const [showConfirm, setShowConfirm] = useState(false);
 
   const stats = useMemo(() => {
+    // Corregido: Añadido tipo (t: Transaction) para evitar errores en VS Code
     const incomes = transactions.filter(
-      (t) => t.type === TransactionType.INCOME,
+      (t: Transaction) => t.type === TransactionType.INCOME,
     );
-    const totalIncome = incomes.reduce((acc, t) => acc + t.amount, 0);
+    const totalIncome = incomes.reduce(
+      (acc: number, t: Transaction) => acc + t.amount,
+      0,
+    );
+
+    // Función auxiliar para calcular saldos por categoría de forma segura
+    const getBal = (cat: Category) =>
+      transactions
+        .filter((t: Transaction) => t.category === cat)
+        .reduce(
+          (acc: number, t: Transaction) =>
+            acc + (t.type === TransactionType.INCOME ? t.amount : -t.amount),
+          0,
+        );
 
     const jarBalances = {
-      clf: transactions
-        .filter((t) => t.category === Category.CLF)
-        .reduce(
-          (acc, t) =>
-            acc + (t.type === TransactionType.INCOME ? t.amount : -t.amount),
-          0,
-        ),
-      play: transactions
-        .filter((t) => t.category === Category.PLAY)
-        .reduce(
-          (acc, t) =>
-            acc + (t.type === TransactionType.INCOME ? t.amount : -t.amount),
-          0,
-        ),
-      savings: transactions
-        .filter((t) => t.category === Category.SAVINGS)
-        .reduce(
-          (acc, t) =>
-            acc + (t.type === TransactionType.INCOME ? t.amount : -t.amount),
-          0,
-        ),
-      edu: transactions
-        .filter((t) => t.category === Category.EDUCATION)
-        .reduce(
-          (acc, t) =>
-            acc + (t.type === TransactionType.INCOME ? t.amount : -t.amount),
-          0,
-        ),
-      give: transactions
-        .filter((t) => t.category === Category.GIVE)
-        .reduce(
-          (acc, t) =>
-            acc + (t.type === TransactionType.INCOME ? t.amount : -t.amount),
-          0,
-        ),
-      general: transactions
-        .filter((t) => t.category === Category.GENERAL)
-        .reduce(
-          (acc, t) =>
-            acc + (t.type === TransactionType.INCOME ? t.amount : -t.amount),
-          0,
-        ),
+      clf: getBal(Category.CLF),
+      play: getBal(Category.PLAY),
+      savings: getBal(Category.SAVINGS),
+      edu: getBal(Category.EDUCATION),
+      give: getBal(Category.GIVE),
+      general: getBal(Category.GENERAL),
     };
 
+    // Recuperamos la lógica de Score por Niveles para que no todo se vea igual
     let score = 0;
     if (totalIncome > 0) {
       const totalSavings =
@@ -85,6 +64,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         jarBalances.edu +
         jarBalances.give;
       const ratio = totalSavings / totalIncome;
+
       if (userLevel === UserLevel.HABITS)
         score = ratio >= 0.1 ? 10 : Math.floor(ratio * 100);
       else if (userLevel === UserLevel.ARCHITECT)
@@ -93,18 +73,13 @@ const Dashboard: React.FC<DashboardProps> = ({
     }
     score = Math.min(10, Math.max(0, score));
 
-    let statusStyle = {
-      bg: "bg-ios-blue",
-      msg: "Gestión impecable.",
-    };
-
-    if (score < 5) {
+    let statusStyle = { bg: "bg-ios-blue", msg: "Gestión impecable." };
+    if (score < 5)
       statusStyle = { bg: "bg-ios-red", msg: "Revisa tus prioridades." };
-    } else if (score < 8) {
+    else if (score < 8)
       statusStyle = { bg: "bg-ios-orange", msg: "Mantén el enfoque." };
-    } else if (score < 10) {
+    else if (score < 10)
       statusStyle = { bg: "bg-ios-green", msg: "Buen equilibrio." };
-    }
 
     return {
       totalIncome,
@@ -139,7 +114,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   const levelInfo = getLevelInfo();
 
   const chartData = useMemo(() => {
-    const data = [
+    return [
       { name: "Libertad", value: stats.jarBalances.clf, cat: Category.CLF },
       {
         name: "Ahorro",
@@ -155,12 +130,10 @@ const Dashboard: React.FC<DashboardProps> = ({
       },
       { name: "Dona", value: stats.jarBalances.give, cat: Category.GIVE },
     ].filter((d) => d.value > 0);
-    return data;
   }, [stats.jarBalances]);
 
   return (
     <div className="space-y-8 animate-ios-in">
-      {/* Header Minimalista */}
       <div className="flex flex-col items-center pt-2">
         <div
           className={`px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase mb-4 ${levelInfo.bg} ${levelInfo.color}`}
@@ -176,7 +149,6 @@ const Dashboard: React.FC<DashboardProps> = ({
         </p>
       </div>
 
-      {/* Tarjeta de Score Pro */}
       <div
         className={`p-5 rounded-ios-xl text-white shadow-sm flex items-center justify-between ${stats.colorClass}`}
       >
@@ -191,7 +163,6 @@ const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      {/* Gráfico y Distribución */}
       <div className="ios-card p-6">
         <h3 className="text-[17px] font-semibold mb-6">Distribución Actual</h3>
         <div className="h-48 mb-6">
@@ -239,7 +210,6 @@ const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      {/* Movimientos Recientes */}
       <div className="space-y-4">
         <h3 className="text-[17px] font-semibold px-1">Movimientos</h3>
         <div className="ios-card divide-y divide-gray-100 overflow-hidden">
