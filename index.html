@@ -3,58 +3,121 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RMindset</title>
+    <title>RMindset - Finanzas Millonarias</title>
+
     <link rel="icon" type="image/png" href="/icono-resumen.png" />
     <link rel="manifest" href="/manifest.json" />
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              "ios-blue": "#007aff",
-              "ios-bg": "#f2f2f7",
+              ios: {
+                blue: "#007AFF",
+                green: "#34C759",
+                red: "#FF3B30",
+                orange: "#FF9500",
+                yellow: "#FFCC00",
+                gray: "#8E8E93",
+                background: "#F2F2F7",
+                card: "#FFFFFF",
+              },
+              slate: {
+                900: "#1C1C1E",
+              },
+            },
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                '"SF Pro Text"',
+                '"SF Pro Display"',
+                "Inter",
+                "system-ui",
+                "sans-serif",
+              ],
+            },
+            borderRadius: {
+              ios: "20px",
+              "ios-xl": "24px",
             },
           },
         },
       };
     </script>
 
-    <style>
-      body {
-        background-color: #f2f2f7;
-        margin: 0;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply bg-[#F2F2F7] text-slate-900 antialiased overflow-x-hidden;
+          font-family:
+            -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+            "Inter", system-ui, sans-serif;
+          -webkit-tap-highlight-color: transparent;
+        }
       }
 
-      /* Corrige el amontonamiento definiendo las tarjetas de Google AI Studio */
-      .ios-card {
-        background-color: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border-radius: 1.25rem;
-        border: 1px solid rgba(200, 200, 200, 0.3);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        margin-bottom: 1rem;
-        overflow: hidden;
+      @layer components {
+        .ios-blur {
+          @apply backdrop-blur-xl bg-white/80;
+          -webkit-backdrop-filter: blur(20px);
+        }
+
+        .ios-card {
+          @apply bg-white border border-gray-100 shadow-[0_4px_12px_rgba(0,0,0,0.03)] rounded-[20px] transition-all duration-300;
+        }
+
+        .ios-card:active {
+          @apply scale-[0.98] brightness-95;
+        }
+
+        input,
+        select {
+          @apply outline-none focus:ring-2 focus:ring-ios-blue/30;
+        }
       }
 
-      .glass-morphism {
-        background-color: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+      /* Animaciones */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
       }
 
-      #root {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+      .animate-fadeIn {
+        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      .animate-slideUp {
+        animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      }
+
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
       }
     </style>
 
@@ -62,10 +125,10 @@
       {
         "imports": {
           "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+          "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
           "react/": "https://esm.sh/react@^19.2.4/",
           "react": "https://esm.sh/react@^19.2.4",
           "recharts": "https://esm.sh/recharts@^3.7.0",
-          "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
           "@google/genai": "https://esm.sh/@google/genai@^1.39.0"
         }
       }
