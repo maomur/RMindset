@@ -1,27 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
     "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
-    /* Configuración para archivos en la raíz */
-    "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
+    "types": ["node"],
+    "moduleResolution": "bundler",
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-
-    /* Rutas para que encuentre tus archivos types.ts y App.tsx */
-    "baseUrl": ".",
-    "paths": {
-      "*": ["*", "types/*"]
-    },
-
-    "strict": false,
+    "moduleDetection": "force",
     "allowJs": true,
-    "esModuleInterop": true
-  },
-  "include": ["**/*.ts", "**/*.tsx"]
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  }
 }
