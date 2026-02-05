@@ -2,14 +2,15 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>RMindset - Finanzas Millonarias</title>
 
     <link rel="icon" type="image/png" href="/icono-resumen.png" />
     <link rel="manifest" href="/manifest.json" />
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -27,30 +28,25 @@
                 background: "#F2F2F7",
                 card: "#FFFFFF",
               },
+              slate: { 900: "#1C1C1E" },
             },
             fontFamily: {
-              // Aquí añadimos la jerarquía exacta que te dio la IA
+              // Forzamos la jerarquía para que no use la fuente genérica del sistema
               sans: [
-                '"SF Pro Text"',
-                '"SF Pro Display"',
-                "Inter",
+                '"Inter"',
                 "-apple-system",
                 "BlinkMacSystemFont",
+                '"SF Pro Text"',
                 "system-ui",
                 "sans-serif",
               ],
             },
-            // Esto permite que Tailwind entienda tus tamaños personalizados como text-[13px]
-            fontSize: {
-              xs: ["0.75rem", { lineHeight: "1rem" }],
-              sm: ["0.875rem", { lineHeight: "1.25rem" }],
-              base: ["1rem", { lineHeight: "1.5rem" }],
-            },
-            // El "truco" de Apple: espaciado de letras
-            letterSpacing: {
-              tighter: "-0.05em",
-              widest: "0.1em",
-              ios: "0.4em",
+            fontWeight: {
+              // Definición exacta de pesos para evitar el efecto "gigante"
+              base: "400",
+              medium: "500",
+              bold: "700",
+              black: "900",
             },
           },
         },
@@ -59,68 +55,31 @@
 
     <style type="text/tailwindcss">
       @layer base {
+        html {
+          /* Reducimos el tamaño base para que text-6xl no rompa la pantalla */
+          font-size: 15px;
+        }
         body {
-          @apply bg-[#F2F2F7] text-slate-900 antialiased overflow-x-hidden;
+          @apply bg-[#F2F2F7] text-slate-900;
+          /* El truco de Apple para que la negrita no se vea "gorda" */
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
           font-family:
-            -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
-            "Inter", system-ui, sans-serif;
-          -webkit-tap-highlight-color: transparent;
+            "Inter",
+            -apple-system,
+            sans-serif;
         }
       }
 
       @layer components {
-        .ios-blur {
-          @apply backdrop-blur-xl bg-white/80;
-          -webkit-backdrop-filter: blur(20px);
-        }
-
         .ios-card {
-          @apply bg-white border border-gray-100 shadow-[0_4px_12px_rgba(0,0,0,0.03)] rounded-[20px] transition-all duration-300;
-        }
-
-        .ios-card:active {
-          @apply scale-[0.98] brightness-95;
-        }
-
-        input,
-        select {
-          @apply outline-none focus:ring-2 focus:ring-ios-blue/30;
+          @apply bg-white border border-gray-100 shadow-[0_4px_12px_rgba(0,0,0,0.03)] rounded-[20px];
         }
       }
 
-      /* Animaciones */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @keyframes slideUp {
-        from {
-          transform: translateY(30px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      .animate-fadeIn {
-        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      }
-      .animate-slideUp {
-        animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-      }
-
-      ::-webkit-scrollbar {
-        width: 4px;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
+      /* Bloqueamos el escalado automático de fuentes en móviles */
+      * {
+        -webkit-text-size-adjust: none;
       }
     </style>
 
