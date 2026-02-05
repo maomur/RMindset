@@ -6,14 +6,58 @@
     <title>RMindset</title>
     <link rel="icon" type="image/png" href="/icono-resumen.png" />
     <link rel="manifest" href="/manifest.json" />
+
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "ios-blue": "#007aff",
+              "ios-bg": "#f2f2f7",
+            },
+          },
+        },
+      };
+    </script>
+
     <style>
       body {
         background-color: #f2f2f7;
         margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Corrige el amontonamiento definiendo las tarjetas de Google AI Studio */
+      .ios-card {
+        background-color: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-radius: 1.25rem;
+        border: 1px solid rgba(200, 200, 200, 0.3);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1rem;
+        overflow: hidden;
+      }
+
+      .glass-morphism {
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
     </style>
+
     <script type="importmap">
       {
         "imports": {
@@ -21,6 +65,7 @@
           "react/": "https://esm.sh/react@^19.2.4/",
           "react": "https://esm.sh/react@^19.2.4",
           "recharts": "https://esm.sh/recharts@^3.7.0",
+          "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
           "@google/genai": "https://esm.sh/@google/genai@^1.39.0"
         }
       }
