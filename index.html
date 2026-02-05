@@ -61,26 +61,17 @@
       };
     </script>
 
-<style type="text/tailwindcss">
-    @layer base {
-        html {
-            /* Forzamos la fuente Inter y el suavizado de Apple */
-            font-family: 'Inter', -apple-system, sans-serif !important;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    <style type="text/tailwindcss">
+      @layer base {
         body {
-            @apply bg-[#F2F2F7] text-slate-900;
-            /* Eliminamos el peso 900 de raíz */
-            font-weight: 400; 
+          @apply bg-[#F2F2F7] text-slate-900 antialiased overflow-x-hidden select-none;
+          font-family:
+            -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+            "Inter", system-ui, sans-serif;
+          -webkit-tap-highlight-color: transparent;
+          letter-spacing: -0.015em;
         }
-        /* Esto obliga a que los títulos no se pasen de peso */
-        h1, h2, h3, .font-bold {
-            font-weight: 700 !important;
-            letter-spacing: -0.02em !important;
-        }
-    }
-</style>
+      }
 
       @layer components {
         .ios-blur {
