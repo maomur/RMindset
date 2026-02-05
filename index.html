@@ -24,30 +24,33 @@
                 blue: "#007AFF",
                 green: "#34C759",
                 red: "#FF3B30",
-                orange: "#FF9500",
-                yellow: "#FFCC00",
-                gray: "#8E8E93",
                 background: "#F2F2F7",
                 card: "#FFFFFF",
               },
-              slate: {
-                900: "#1C1C1E",
-              },
             },
             fontFamily: {
+              // Aquí añadimos la jerarquía exacta que te dio la IA
               sans: [
-                "-apple-system",
-                "BlinkMacSystemFont",
                 '"SF Pro Text"',
                 '"SF Pro Display"',
                 "Inter",
+                "-apple-system",
+                "BlinkMacSystemFont",
                 "system-ui",
                 "sans-serif",
               ],
             },
-            borderRadius: {
-              ios: "20px",
-              "ios-xl": "24px",
+            // Esto permite que Tailwind entienda tus tamaños personalizados como text-[13px]
+            fontSize: {
+              xs: ["0.75rem", { lineHeight: "1rem" }],
+              sm: ["0.875rem", { lineHeight: "1.25rem" }],
+              base: ["1rem", { lineHeight: "1.5rem" }],
+            },
+            // El "truco" de Apple: espaciado de letras
+            letterSpacing: {
+              tighter: "-0.05em",
+              widest: "0.1em",
+              ios: "0.4em",
             },
           },
         },
