@@ -1,0 +1,1 @@
+// Este archivo ha sido eliminado. La lógica de la aplicación es ahora totalmente local y no requiere de servicios de IA externos.
